@@ -57,6 +57,10 @@ fn main() {
     concurrency::create_thread_two();
     concurrency::create_thread_three();
     concurrency::thread_message_passing();
+    concurrency::thread_message_passing_two();
+    concurrency::thread_message_passing_clone();
+    concurrency::mutex();
+    concurrency::thread_shared_state();
 }
 
 fn shadowing() {
