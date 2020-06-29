@@ -8,6 +8,7 @@ mod tuples;
 mod vector;
 
 mod concurrency;
+mod closures;
 fn main() {
     println!("Hello, world!");
 
@@ -53,14 +54,15 @@ fn main() {
 
     mutability::two();
 
-    concurrency::create_thread();
-    concurrency::create_thread_two();
-    concurrency::create_thread_three();
-    concurrency::thread_message_passing();
-    concurrency::thread_message_passing_two();
-    concurrency::thread_message_passing_clone();
-    concurrency::mutex();
-    concurrency::thread_shared_state();
+    //concurrency::create_thread();
+    //concurrency::create_thread_two();
+    //concurrency::create_thread_three();
+    //concurrency::thread_message_passing();
+    //concurrency::thread_message_passing_two();
+    //concurrency::thread_message_passing_clone();
+    //concurrency::mutex();
+    // concurrency::thread_shared_state();
+    closures::exec();
 }
 
 fn shadowing() {

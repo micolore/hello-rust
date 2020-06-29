@@ -1,7 +1,7 @@
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
-use std::sync::Mutex;
+use std::sync::{Mutex,Arc};
 use std::rc::Rc;
 
 
@@ -123,13 +123,13 @@ pub fn mutex(){
     }
     print!("mutex m={:?}",m);
 }
-
+/// arc atomically reference counted
 pub fn thread_shared_state(){
-    let m  =Rc::new(Mutex::new(0));
+    let m  =Arc::new(Mutex::new(0));
     let mut handles = vec![];
 
-    for _ in 1..10 {
-        let counter = Rc::clone(&m);
+    for _ in 0..10 {
+        let counter = Arc::clone(&m);
         let handle = thread::spawn(move || {
             let mut num = counter.lock().unwrap();
             *num += 1;
