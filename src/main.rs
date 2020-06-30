@@ -9,6 +9,7 @@ mod vector;
 
 mod concurrency;
 mod closures;
+mod traits;
 fn main() {
     println!("Hello, world!");
 
@@ -63,6 +64,8 @@ fn main() {
     //concurrency::mutex();
     // concurrency::thread_shared_state();
     closures::exec();
+    traits::trait_person();
+
 }
 
 fn shadowing() {
