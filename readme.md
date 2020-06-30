@@ -109,7 +109,9 @@ let mut y = &mut x;
 * 字段级别可变性
 * rust的闭包与函数有什么区别？
 
+* trait 
 
+   类似java的接口（interface）
 
 
 
