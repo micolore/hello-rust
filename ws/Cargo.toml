@@ -1,5 +1,5 @@
 [package]
-name = "web-server"
+name = "ws"
 version = "0.1.0"
 authors = ["micolore <471304402@qq.com>"]
 edition = "2018"
