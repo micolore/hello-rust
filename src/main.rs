@@ -34,21 +34,23 @@ fn main() {
 
     slice::slice_test();
 
-    let result_foo = references::foo(23, 6);
-    println!("result_foo:{:?}", result_foo);
-    let result_foo_ferences = references::foo_ferences(&23, &6);
-    println!("result_foo_ferences:{:?}", result_foo_ferences);
-    references::foo_update_value_by_references();
+    // let result_foo = references::foo(23, 6);
+    // println!("result_foo:{:?}", result_foo);
+    // let result_foo_ferences = references::foo_ferences(&23, &6);
+    // println!("result_foo_ferences:{:?}", result_foo_ferences);
+    // references::foo_update_value_by_references();
 
-    ownership::foo2();
+    // ownership::foo2();
 
-    lifetimes::exec();
+    // lifetimes::exec();
 
-    mutability::two();
+    // mutability::two();
 
     closures::exec();
     traits::trait_person();
+    iterators::vector_iter();
 
+    macros::m_call_macro();
 }
 
 fn shadowing() {
