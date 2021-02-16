@@ -4,7 +4,17 @@ use std::time::Duration;
 use std::sync::{Mutex,Arc};
 use std::rc::Rc;
 
-
+// concurrency main
+fn concurrency_main(){
+    //concurrency::create_thread();
+    //concurrency::create_thread_two();
+    //concurrency::create_thread_three();
+    //concurrency::thread_message_passing();
+    //concurrency::thread_message_passing_two();
+    //concurrency::thread_message_passing_clone();
+    //concurrency::mutex();
+    // concurrency::thread_shared_state();
+}
 ///
 ///fearless  concurrency
 ///

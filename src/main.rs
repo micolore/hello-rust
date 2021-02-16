@@ -3,20 +3,17 @@ mod mutability;
 mod ownership;
 mod references;
 mod slice;
-mod test_fn;
+mod function;
 mod tuples;
 mod vector;
-
 mod concurrency;
 mod closures;
 mod traits;
+mod basic;
 fn main() {
     println!("Hello, world!");
 
-    let a = 12;
-    println!("a is {}", a);
-
-    println!("a is {0}  a is {0}", a);
+    basic::basic_main();
 
     test_const();
 
@@ -29,12 +26,6 @@ fn main() {
     test_math();
 
     multi_variable();
-
-    test_fn::fn_return();
-
-    test_fn::ft(1, 2);
-
-    test_fn::print_number(23);
 
     vector::vector_demo();
 
@@ -55,14 +46,6 @@ fn main() {
 
     mutability::two();
 
-    //concurrency::create_thread();
-    //concurrency::create_thread_two();
-    //concurrency::create_thread_three();
-    //concurrency::thread_message_passing();
-    //concurrency::thread_message_passing_two();
-    //concurrency::thread_message_passing_clone();
-    //concurrency::mutex();
-    // concurrency::thread_shared_state();
     closures::exec();
     traits::trait_person();
 
@@ -80,9 +63,15 @@ fn shadowing() {
 }
 
 fn test_const() {
+    let a = 12;
+    println!("a is {}", a);
+    //占位符
+    //Rust 中格式字符串中的占位符不是"% + 字母"的形式，而是一对 {}
+    println!("a is {0}  a is {0}", a);
+
     let b = 23;
     const BA: i32 = 12;
-    println!(" ba: {} , b：{}", BA, b);
+    println!("ba: {} , b：{}", BA, b);
 }
 
 fn test_int() {}

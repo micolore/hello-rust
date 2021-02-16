@@ -1,3 +1,13 @@
+// test_fn_mod 入口
+fn function_main(){
+    fn_return();
+
+    ft(1, 2);
+
+    print_number(23);
+
+}
+
 /// 
 /// 表达式与语句的区别在什么地方？
 ///  a: 表达式返回一个值，语句不会
@@ -7,7 +17,6 @@
 /// let y = 5 right
 /// 表达式语句的目的是把所有的表达式变成语句
 /// 为什么rust不推荐使用return
-
 
 //发散函数
 fn diverges() -> ! {
