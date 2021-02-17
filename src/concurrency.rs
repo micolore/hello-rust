@@ -5,15 +5,15 @@ use std::sync::{Mutex,Arc};
 use std::rc::Rc;
 
 // concurrency main
-fn concurrency_main(){
-    //concurrency::create_thread();
-    //concurrency::create_thread_two();
-    //concurrency::create_thread_three();
-    //concurrency::thread_message_passing();
-    //concurrency::thread_message_passing_two();
-    //concurrency::thread_message_passing_clone();
-    //concurrency::mutex();
-    // concurrency::thread_shared_state();
+pub fn concurrency_main(){
+    create_thread();
+    // create_thread_two();
+    //create_thread_three();
+    //thread_message_passing();
+    //thread_message_passing_two();
+    //thread_message_passing_clone();
+    //mutex();
+    //thread_shared_state();
 }
 ///
 ///fearless  concurrency

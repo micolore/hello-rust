@@ -22,8 +22,8 @@ pub fn exec(){
 
     let x: &'static str ="hello world";
     static FOO:i32 = 6;
-    static y:&'static i32 =&FOO; 
-    println!("lifetimes y{}",y)
+    static Y:&'static i32 =&FOO; 
+    println!("lifetimes y{}",Y)
 }
 
 /// 如果Foo的引用比name的引用活的久，就意味着有时候name会无效

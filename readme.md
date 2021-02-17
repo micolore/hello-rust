@@ -564,11 +564,74 @@
 
 * 生命周期注解是什么？
 
+  > 生命周期注释是描述引用生命周期的办法。
+
+  ```rust
+  &i32        // 常规引用
+  &'a i32     // 含有生命周期注释的引用
+  &'a mut i32 // 可变型含有生命周期注释的引用
+  
+  fn longer<'a>(s1: &'a str, s2: &'a str) -> &'a str {
+      if s2.len() > s1.len() {
+          s2
+      } else {
+          s1
+      }
+  }
+  
+  fn main() {
+      let r;
+      {
+          let s1 = "rust";
+          let s2 = "ecmascript";
+          r = longer(s1, s2);
+          println!("{} is longer", r);
+      }
+  }
+  ```
+
+  
+
 * 描述性与规定性的区别在哪里？
 
 * 生命周期省略？
 
 * 输入与输出生命周期，等于函数的参数与返回值
+
+##### 1、生命周期
+
+```rust
+{
+    let r;
+
+    {
+        let x = 5;
+        r = &x;
+    }
+
+    println!("r: {}", r);
+}
+
+fn longer(s1: &str, s2: &str) -> &str {
+    if s2.len() > s1.len() {
+        s2
+    } else {
+        s1
+    }
+}
+
+fn main() {
+    let r;
+    {
+        let s1 = "rust";
+        let s2 = "ecmascript";
+        r = longer(s1, s2);
+    }
+    println!("{} is longer", r);
+}
+```
+
+
 
 ### 四、并发编程
 
@@ -885,6 +948,238 @@ rust标准库与语言本身有什么关系？send&sync
 ​              类似java的接口（interface）
 
 #### 三、范型
+
+##### 1、在函数中定义泛型
+
+```rust
+//1)
+fn max(array: &[i32]) -> i32 {
+    let mut max_index = 0;
+    let mut i = 1;
+    while i < array.len() {
+        if array[i] > array[max_index] {
+            max_index = i;
+        }
+        i += 1;
+    }
+    array[max_index]
+}
+
+fn main() {
+    let a = [2, 4, 6, 3, 1];
+    println!("max = {}", max(&a));
+}
+
+//2)
+fn max<T>(array: &[T]) -> T {
+    let mut max_index = 0;
+    let mut i = 1;
+    while i < array.len() {
+        if array[i] > array[max_index] {
+            max_index = i;
+        }
+        i += 1;
+    }
+    array[max_index]
+}
+```
+
+##### 2、结构体与枚举类中的泛型
+
+```rust
+//1)
+struct Point<T> {
+    x: T,
+    y: T
+}
+let p1 = Point {x: 1, y: 2};
+let p2 = Point {x: 1.0, y: 2.0};
+
+let p = Point {x: 1, y: 2.0};//error
+
+//2)
+struct Point<T1, T2> {
+    x: T1,
+    y: T2
+}
+
+//3)
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+//4)
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+
+fn main() {
+    let p = Point { x: 1, y: 2 };
+    println!("p.x = {}", p.x());
+}
+
+impl Point<f64> {
+    fn x(&self) -> f64 {
+        self.x
+    }
+}
+
+impl<T, U> Point<T, U> {
+    fn mixup<V, W>(self, other: Point<V, W>) -> Point<T, W> {
+        Point {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+```
+
+##### 3、特性
+
+```rust
+trait Descriptive {
+    fn describe(&self) -> String;
+}
+
+struct Person {
+    name: String,
+    age: u8
+}
+
+//impl <特性名> for <所实现的类型名>
+
+impl Descriptive for Person {
+    fn describe(&self) -> String {
+        format!("{} {}", self.name, self.age)
+    }
+}
+
+
+//2)
+trait Descriptive {
+    fn describe(&self) -> String {
+        String::from("[Object]")
+    }
+}
+
+struct Person {
+    name: String,
+    age: u8
+}
+
+impl Descriptive for Person {
+    fn describe(&self) -> String {
+        format!("{} {}", self.name, self.age)
+    }
+}
+
+fn main() {
+    let cali = Person {
+        name: String::from("Cali"),
+        age: 24
+    };
+    println!("{}", cali.describe());
+}
+```
+
+##### 4、特性做参数
+
+```rust
+fn output(object: impl Descriptive) {
+    println!("{}", object.describe());
+}
+
+fn output<T: Descriptive>(object: T) {
+    println!("{}", object.describe());
+}
+
+fn output_two<T: Descriptive>(arg1: T, arg2: T) {
+    println!("{}", arg1.describe());
+    println!("{}", arg2.describe());
+}
+
+fn notify(item: impl Summary + Display)
+fn notify<T: Summary + Display>(item: T)
+
+fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U)
+
+fn some_function<T, U>(t: T, u: U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+          
+trait Comparable {
+    fn compare(&self, object: &Self) -> i8;
+}
+
+fn max<T: Comparable>(array: &[T]) -> &T {
+    let mut max_index = 0;
+    let mut i = 1;
+    while i < array.len() {
+        if array[i].compare(&array[max_index]) > 0 {
+            max_index = i;
+        }
+        i += 1;
+    }
+    &array[max_index]
+}
+
+impl Comparable for f64 {
+    fn compare(&self, object: &f64) -> i8 {
+        if &self > &object { 1 }
+        else if &self == &object { 0 }
+        else { -1 }
+    }
+}
+
+fn main() {
+    let arr = [1.0, 3.0, 5.0, 4.0, 2.0];
+    println!("maximum of arr is {}", max(&arr));
+}
+```
+
+##### 5、特性做返回值
+
+```
+fn person() -> impl Descriptive {
+    Person {
+        name: String::from("Cali"),
+        age: 24
+    }
+}
+
+fn some_function(bool bl) -> impl Descriptive {
+    if bl {
+        return A {};
+    } else {
+        return B {};
+    }
+}
+```
+
+##### 6、有条件实现方法
+
+```rust
+struct A<T> {}
+
+impl<T: B + C> A<T> {
+    fn d(&self) {}
+}
+```
+
+
 
 #### 四、生命周期
 
